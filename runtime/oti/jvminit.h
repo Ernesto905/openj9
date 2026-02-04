@@ -443,6 +443,7 @@ enum INIT_STAGE {
 #define VMOPT_XXDISABLEDEBUGONRESTORE "-XX:-DebugOnRestore"
 #define VMOPT_XXENABLETIMECOMPENSATION "-XX:+EnableTimeCompensation"
 #define VMOPT_XXDISABLETIMECOMPENSATION "-XX:-EnableTimeCompensation"
+#define VMOPT_XXRESTOREOPTIONSFILE "-XX:RestoreOptionsFile="
 #endif /* defined(J9VM_OPT_CRIU_SUPPORT) */
 
 #if defined(J9VM_OPT_CRAC_SUPPORT)

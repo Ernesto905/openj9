@@ -1569,6 +1569,25 @@ loadRestoreArguments(J9VMThread *currentThread, const char *optionsFile, char *e
 			result = RESTORE_ARGS_RETURN_OPTIONS_FILE_FAILED;
 			goto done;
 		}
+	} else if (NULL != vm->restoreOptionsFile) {
+		PORT_ACCESS_FROM_VMC(currentThread);
+		UDATA allocLength = LITERAL_STRLEN(VMOPT_XOPTIONSFILE_EQUALS) + strlen(vm->restoreOptionsFile) + 1;
+		char *restoreOptionsFile = (char *)j9mem_allocate_memory(allocLength, OMRMEM_CATEGORY_VM);
+
+		if (NULL == restoreOptionsFile) {
+			result = RESTORE_ARGS_RETURN_OOM;
+			goto done;
+		}
+
+		j9str_printf(restoreOptionsFile, allocLength, VMOPT_XOPTIONSFILE_EQUALS "%s", vm->restoreOptionsFile);
+		if (0 != addXOptionsFile(vm->portLibrary, restoreOptionsFile, &vmArgumentsList, 0)) {
+			result = RESTORE_ARGS_RETURN_OPTIONS_FILE_FAILED;
+		}
+
+		j9mem_free_memory(restoreOptionsFile);
+		if (RESTORE_ARGS_RETURN_OK != result) {
+			goto done;
+		}
 	}
 
 	if (NULL != envFile) {

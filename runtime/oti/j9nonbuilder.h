@@ -6548,6 +6548,7 @@ typedef struct J9JavaVM {
 #endif /* defined(J9VM_ZOS_3164_INTEROPERABILITY) */
 #if defined(J9VM_OPT_CRIU_SUPPORT)
 	J9CRIUCheckpointState checkpointState;
+	const char *restoreOptionsFile;
 #endif /* defined(J9VM_OPT_CRIU_SUPPORT) */
 #if JAVA_SPEC_VERSION >= 16
 	struct J9Pool *cifNativeCalloutDataCache;

@@ -4217,6 +4217,15 @@ processVMArgsFromFirstToLast(J9JavaVM * vm)
 		}
 	}
 
+	{
+		IDATA restoreOptIndex = FIND_AND_CONSUME_VMARG(STARTSWITH_MATCH, VMOPT_XXRESTOREOPTIONSFILE, NULL);
+		if (restoreOptIndex >= 0) {
+			char *restoreOptFile = NULL;
+			GET_OPTION_VALUE(restoreOptIndex, '=', &restoreOptFile);
+			vm->restoreOptionsFile = restoreOptFile;
+		}
+	}
+
 	vm->checkpointState.lastRestoreTimeInNanoseconds = -1;
 	vm->checkpointState.processRestoreStartTimeInNanoseconds = -1;
 #endif /* defined(J9VM_OPT_CRIU_SUPPORT) */
